@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { ChannelsListComponent } from './chat/channels-list/channels-list.component';
-import { ChannelUsersListComponent } from './chat/channel-users-list/channel-users-list.component';
 import { ChatRegionComponent } from './chat/chat-region/chat-region.component';
 import { RouterModule, Routes } from '@angular/router';
 import {ChatComponent} from './chat/chat.component';
@@ -16,7 +15,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
    { path: '', component: LoginComponent },
    { path: 'login', component: LoginComponent },
    { path: 'chat', component: ChatComponent },
+   { path: 'chat/{CID}', component: ChatComponent },
    { path: '**', pathMatch:'full', redirectTo: 'routePath' }
+
  ];
  
  export const appRouting = RouterModule.forRoot(routes); [
@@ -28,7 +29,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     AppComponent,
     LoginComponent,
     ChannelsListComponent,
-    ChannelUsersListComponent,
     ChatRegionComponent,
     ChatComponent
   ],

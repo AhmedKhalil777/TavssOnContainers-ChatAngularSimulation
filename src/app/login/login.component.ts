@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http'
 import { FormBuilder, FormControl } from '@angular/forms';
+import {Router} from '@angular/router'
+import { from } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -10,7 +12,7 @@ export class LoginComponent implements OnInit {
 
   checkoutForm;
   _url :string = 'https://localhost:5001/api/v1/chat/';
-  constructor(private http : HttpClient , private formBuilder: FormBuilder) { 
+  constructor(private http : HttpClient , private formBuilder: FormBuilder , private router : Router) { 
     this.checkoutForm = this.formBuilder.group({
       id: new FormControl('')
     });
@@ -24,6 +26,7 @@ export class LoginComponent implements OnInit {
       console.log(res);
       if(res != null){
       localStorage.setItem('Id' , checkoutForm.id);
+      this.router.navigate(['/chat']);
       console.log(localStorage.getItem('Id'));
     }
     });
