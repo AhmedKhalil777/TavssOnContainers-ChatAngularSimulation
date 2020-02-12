@@ -6,7 +6,9 @@ import {MinChannel} from '../../Interfaces/min-channel';
 import { faCloudSun , faPaperPlane, faUserPlus,  faSmile,faPen} from '@fortawesome/free-solid-svg-icons';
 import { Channel } from '../../Interfaces/channel';
 import { MessageBody } from 'src/app/Interfaces/message-body';
+import {ChatsignalrService} from '../../Services/chatsignalr.service'
 import {ChatReqionServiceService} from '../../Services/char-reqion-service.service';
+import { from } from 'rxjs';
 @Component({
   selector: 'app-chat-region',
   templateUrl: './chat-region.component.html',
@@ -22,17 +24,24 @@ export class ChatRegionComponent implements OnInit {
   smile= faSmile;
  fapen = faPen;
   public messageBody = '';
+  
 
 public _url :string ="https://localhost:5001/api/v1/";
-  constructor(private http:HttpClient , private dom : DomSanitizer) { }
+  constructor(private http:HttpClient ,private hub : ChatsignalrService) {
+    
+   }
   public base64Image; 
  public user : User;
  public message : {body:any , cid : any , uid :any };
 
   ngOnInit() {
+    this.hub.startConnection();
+
     this.getUser(localStorage.getItem('Id'));
     this.getChannels();
     this.getChannel();
+    
+
   }
   
  public getUser =(Id) => {
@@ -58,16 +67,25 @@ public check(){
  public send() {
    
   this.message = {body: this.messageBody ,cid : this.Channel.channelId ,uid : this.user.userId };
-
-   this.http.put(this._url + 'chat/SendMessage' ,this.message  ).subscribe(res=>{
+   
+   this.http.put(this._url + 'chat/SendMessage' ,this.message ).subscribe(res=>{
      console.log(res);
    });
+   this.hub.sendGroupMessage(localStorage.getItem("CID") ,this.user.userId, this.user.imgPath, this.message.body);
+   //this.hub.SendBroadCast(this.user.userId , this.message.body);
  };
+
+ public joinToGroup(){
+  this.hub.addMesssagesListner();
+   this.hub.joinGroup(localStorage.getItem("CID"));
+
+ }
+
 
  public getChannels = () =>{
    this.http.get(this._url+'chat/GetUserChannels/'+localStorage.getItem('Id')).subscribe((res : MinChannel[]) =>{
      this.Channels = res;
-     localStorage.setItem("CID" ,this.Channel[0].channelId)
+     localStorage.setItem("CID" ,this.Channel[0].channelId);
      
    });
 
