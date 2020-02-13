@@ -9,6 +9,7 @@ import { MessageBody } from 'src/app/Interfaces/message-body';
 import {ChatsignalrService} from '../../Services/chatsignalr.service'
 import {ChatReqionServiceService} from '../../Services/char-reqion-service.service';
 import { from } from 'rxjs';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 @Component({
   selector: 'app-chat-region',
   templateUrl: './chat-region.component.html',
@@ -24,7 +25,7 @@ export class ChatRegionComponent implements OnInit {
   smile= faSmile;
  fapen = faPen;
   public messageBody = '';
-  
+  remessage : any;
 
 public _url :string ="https://localhost:5001/api/v1/";
   constructor(private http:HttpClient ,private hub : ChatsignalrService) {
@@ -76,7 +77,7 @@ public check(){
  };
 
  public joinToGroup(){
-  this.hub.addMesssagesListner();
+   this.hub.addMesssagesListner(this.Channel);
    this.hub.joinGroup(localStorage.getItem("CID"));
 
  }

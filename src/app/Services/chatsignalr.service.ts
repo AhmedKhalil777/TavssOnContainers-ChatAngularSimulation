@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as  signalr from '@aspnet/signalr';
 import {Message} from '../Interfaces/message'
+import { Channel } from '../Interfaces/channel';
 @Injectable({
   providedIn: 'root'
 })
@@ -26,13 +27,15 @@ export class ChatsignalrService {
   /**
    * addMesssagesListner
    */
-  public addMesssagesListner =() => {
+  public addMesssagesListner =(channel : Channel) => {
     
       this.hub.on('RecievedMessageFromGroup', (data : Message) => {
         this.data = data;
+        channel.messages.push(data);
         console.log(data); 
+        
       }); 
-    
+      return  channel;
   };
 
  /**

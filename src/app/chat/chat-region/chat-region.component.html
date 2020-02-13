@@ -11,15 +11,24 @@
         </div>
     </div>
     <div class="messages" style="width: 100%;">
-        <ul *ngFor="let message of Channel.messages">
-            <li class="sent" *ngIf="message.userId != user.userId">
+        <ul >
+            
+            <span *ngFor="let message of Channel.messages" >
+                <li class="sent" *ngIf="message.userId != user.userId" >
+                <img src={{message.imgPath}}  alt="" />
+                <p>{{message.body}}</p>
+                </li>
+            <li class="replies" *ngIf="message.userId == user.userId" >
                 <img src={{message.imgPath}}  alt="" />
                 <p>{{message.body}}</p>
             </li>
-            <li class="replies" *ngIf="message.userId == user.userId">
+        </span>
+            <!--
+            <li >
                 <img src={{message.imgPath}} alt="" />
                 <p>{{message.body}}</p>
-            </li>
+            </li>-->
+
         </ul>
     </div>
     <div class="message-input">
