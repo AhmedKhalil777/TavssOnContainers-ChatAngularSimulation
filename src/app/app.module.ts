@@ -9,6 +9,10 @@ import { ChatRegionComponent } from './chat/chat-region/chat-region.component';
 import { RouterModule, Routes } from '@angular/router';
 import {ChatComponent} from './chat/chat.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { IconsModule } from './icons/icons.module';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import  {  NgxEmojiPickerModule  }  from  'ngx-emoji-picker';
+import { TestdesignComponent } from './testdesign/testdesign.component';
 
 
  const routes: Routes = [
@@ -19,18 +23,20 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
    { path: '**', pathMatch:'full', redirectTo: 'routePath' }
 
  ];
- 
+
  export const appRouting = RouterModule.forRoot(routes); [
 
  ];
 
 @NgModule({
   declarations: [
+    TestdesignComponent,
     AppComponent,
     LoginComponent,
     ChannelsListComponent,
     ChatRegionComponent,
-    ChatComponent
+    ChatComponent,
+    TestdesignComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +44,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
-    FontAwesomeModule
+    FontAwesomeModule,
+    IconsModule,
+    PickerModule,
+    NgxEmojiPickerModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent , LoginComponent , ChatComponent]

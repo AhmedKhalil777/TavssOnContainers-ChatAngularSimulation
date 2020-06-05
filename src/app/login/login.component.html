@@ -3,18 +3,18 @@
 <div class="wrapper fadeInDown">
     <div id="formContent">
       <!-- Tabs Titles -->
-  
+
       <!-- Icon -->
       <div class="fadeIn first">
         <img [src]="'assets/TAVSSv1.png'" id="icon" alt="User Icon" />
       </div>
-  
+
       <!-- Login Form -->
-      <form [formGroup]="checkoutForm" (ngSubmit)="login(checkoutForm.value)">
+      <form [formGroup]="checkoutForm" (ngSubmit)="login( checkoutForm.value)">
         <input type="text"  class="fadeIn second"  placeholder="id" formControlName="id"/>
         <input type="submit" class="fadeIn fourth" value="Log In"/>
       </form>
 
-  
+
     </div>
   </div>

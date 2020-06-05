@@ -1,25 +1,27 @@
 
 <div class="content">
     <div class="contact-profile">
-        <img src="{{Channel.imgPath}}" alt="" />
+         <img src="{{_asurl+Channel.imgPath}}" alt="" aria-hidden="true" data-toggle="modal" data-target="#ChangeImage" data-whatever="@fat" />
         <p>{{Channel.name}}</p>
         <div class="social-media">
+
             <button class="btn btn-dark" (click)="joinToGroup()" >Connect</button>
-            <fa-icon [icon]="faPen" aria-hidden="true" ></fa-icon>
+
+            <fa-icon [icon]="fapen" aria-hidden="true" ></fa-icon>
             <i class="fa fa-twitter" aria-hidden="true"></i>
              <i class="fa fa-instagram" aria-hidden="true"></i>
         </div>
     </div>
-    <div class="messages" style="width: 100%;">
-        <ul >
-            
-            <span *ngFor="let message of Channel.messages" >
-                <li class="sent" *ngIf="message.userId != user.userId" >
+    <div class="messages" style="width: 100%;" id="Body3"   >
+        <ul    >
+
+            <span *ngFor="let message of Channel.messages"  >
+                <li class="sent" *ngIf="message.userId != user.userId"   >
                 <img src={{message.imgPath}}  alt="" />
                 <p>{{message.body}}</p>
                 </li>
             <li class="replies" *ngIf="message.userId == user.userId" >
-                <img src={{message.imgPath}}  alt="" />
+                <img src={{message.imgPath}}  alt=""  />
                 <p>{{message.body}}</p>
             </li>
         </span>
@@ -33,9 +35,71 @@
     </div>
     <div class="message-input">
         <div class="wrap">
-        <input type="text" [(ngModel)]="messageBody" placeholder="Write your message..." style="margin-top: 60px;"  />
-        <fa-icon [icon]="smile" class="attachment" aria-hidden="true" ></fa-icon>
-        <button style="margin-top:50px;" class="submit" (click)="send()"><fa-icon [icon]="paper" aria-hidden="true" ></fa-icon></button>
+        <input type="text" [(ngModel)]="messageBody" placeholder="Write your message..." style="margin-top: 75px;"  />
+        <fa-icon [icon]="smile" class="attachment" aria-hidden="true" style="top: 75px;"
+
+        (click)="toggled = !toggled"
+        [(emojiPickerIf)]="toggled"
+        [emojiPickerDirection]="'top'"
+        (emojiPickerSelect)="handleSelection($event)"></fa-icon>
+        <div class="row justify-content-center mb-3">
+          <div class="col-12">
+            <div class="d-flex justify-content-center">
+
+            </div>
+          </div>
         </div>
+      </div>
+      <div>
+        <button style="    margin-top: 62px;
+        height: 40px;
+        padding: 0 17px;
+        margin-left: 39px;" class="submit"   (click)="send()"><fa-icon [icon]="paper" aria-hidden="true" ></fa-icon></button>
+      </div>
+      </div>
     </div>
+
+
+
+
+    <div class="modal fade" id="ChangeImage" tabindex="-1"  aria-labelledby="ChangeImageLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="ChangeImageLabel">New message</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+  <!-- [..] -->
+
+  <form class="md-form" [formGroup]="Imageform"  enctype="multipart/form-data" >
+    <div class="file-field">
+      <div class="mb-4">
+        <img [src]="ImageUrl == null  ? _asurl+Channel.imgPath : ImageUrl"
+          class="rounded-circle z-depth-1-half avatar-pic" alt="example placeholder avatar">
+      </div>
+      <div class="d-flex justify-content-center">
+        <div class="btn btn-mdb-color btn-rounded float-left">
+          <span>Add photo</span>
+          <input type="file" (change)="readUrl($event)"   />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <input type='button' (click)= "ChangeImage()"  class="btn btn-primary" value="Change Image" data-dismiss="modal" />
+    </div>
+
+  </form>
+
+
 </div>
+
+</div>
+</div>
+</div>
+
+

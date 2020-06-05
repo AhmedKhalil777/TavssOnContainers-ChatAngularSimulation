@@ -14,9 +14,16 @@ import { Location } from '@angular/common';
 })
 export class ChannelsListComponent implements OnInit {
 
-  constructor(private http:HttpClient , private router : Router , private Location : Location) { }
+  constructor(private http:HttpClient , private router : Router , private Location : Location) {
 
+
+   }
+
+  logo = 'assets/TAVSSv1.png';
+  channelu : MinChannel;
   Channels :  MinChannel[];
+  public caption = "";
+  public channelName  = "";
   Channel : Channel;
   faclod = faCloudSun;
   paper = faPaperPlane;
@@ -24,7 +31,7 @@ export class ChannelsListComponent implements OnInit {
   smile= faSmile;
  fapen = faPen
   public _url :string ="https://localhost:5001/api/v1/";
-  public base64Image; 
+  public base64Image;
  public user : User;
   public Chatre :ChatRegionComponent;
   ngOnInit() {
@@ -37,21 +44,52 @@ export class ChannelsListComponent implements OnInit {
     localStorage.setItem("CID" ,CID);
     location.reload();
   };
-  
+
  public getUser =(Id) => {
     this.http.get(this._url+'GetUser/'+Id).subscribe((res : User) =>{
        this.user = res;
-       
+
     });
  };
+
+
+ public CreateChannel= (caption , channelName) => {
+   console.log(caption);
+   console.log(channelName);
+  ;
+  this.http.post(this._url+'chat/CreateChannel' ,
+    {
+      "adminId": localStorage.getItem("Id"),
+      "caption": caption,
+      "name": channelName
+    }
+   ).subscribe((res : any)=>{
+    alert(res);
+  });
+
+
+};
 
 
 
  public getChannels = () =>{
    this.http.get(this._url+'chat/GetUserChannels/'+localStorage.getItem('Id')).subscribe((res : MinChannel[]) =>{
-     this.Channels = res;
+     this.Channels= res;
      localStorage.setItem("CID" ,this.Channel[0].channelId)
-     
+
    });
 
-  }}
+
+     /**
+   * name
+   */
+
+
+  }
+
+
+
+}
+
+
+

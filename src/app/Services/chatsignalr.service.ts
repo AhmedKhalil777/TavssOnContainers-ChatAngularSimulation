@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as  signalr from '@aspnet/signalr';
 import {Message} from '../Interfaces/message'
 import { Channel } from '../Interfaces/channel';
+import { timer } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +15,7 @@ export class ChatsignalrService {
     this.hub = new signalr.HubConnectionBuilder()
                                     .withUrl('https://localhost:5001/ChatHub')
                                     .build();
-    
+
     this.hub
         .start()
         .then(() => console.log('The Connection started'))
@@ -27,14 +28,19 @@ export class ChatsignalrService {
   /**
    * addMesssagesListner
    */
-  public addMesssagesListner =(channel : Channel) => {
-    
+  public addMesssagesListner =(channel : Channel , element) => {
+
       this.hub.on('RecievedMessageFromGroup', (data : Message) => {
         this.data = data;
         channel.messages.push(data);
-        console.log(data); 
-        
-      }); 
+
+
+        console.log(data);
+        setTimeout(function(){element.scrollTop = element.scrollHeight - element.clientHeight;} ,150)
+
+
+
+      });
       return  channel;
   };
 
@@ -53,7 +59,7 @@ export class ChatsignalrService {
       .invoke("GroupCast", Id , CID, imgPath ,message )
       .then(()=> console.log("sended successfully"))
       .catch(err => console.error(err));
-    
+
   }
 
   public joinGroup(CID : string) {
@@ -63,6 +69,14 @@ export class ChatsignalrService {
     .catch(err => console.error(err));
 
   };
+
+
+  public leaveGroup(CID :string){
+    this.hub
+    .invoke('LeaveGroup' , CID)
+    .then(() => console.log('Leaves the group'))
+    .catch(err=> console.error(err));
+  }
 
 
 }

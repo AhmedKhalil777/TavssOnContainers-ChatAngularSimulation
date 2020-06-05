@@ -21,7 +21,7 @@ export class ChatReqionServiceService {
   })
    return this.user;
 };
-  
+
 
    public SendMessage =(body : MessageBody) =>{
     this.http.put(this._url + 'chat/SendMessage' ,body ).subscribe(res=>{
@@ -36,7 +36,7 @@ export class ChatReqionServiceService {
     this.http.get(this._url+'chat/GetChannel/'+localStorage.getItem("CID")).subscribe((res :Channel)=>{
       this.Channel = res;
       console.log(this.Channel);
-      
+
     });
     return this.Channel;
   }
@@ -47,7 +47,7 @@ export class ChatReqionServiceService {
     this.http.get(this._url+'chat/GetUserChannels/'+localStorage.getItem('Id')).subscribe((res : MinChannel[]) =>{
       this.Channels = res;
       localStorage.setItem("CID" ,CID)
-      
+
     });
     return this.Channels;
   }
