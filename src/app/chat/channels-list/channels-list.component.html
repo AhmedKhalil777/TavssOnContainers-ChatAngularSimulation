@@ -37,7 +37,7 @@
             <li  *ngFor="let channel of Channels"   class="contact" >
                 <div class="wrap" (click)="choosegroup(channel.channelId)">
                     <span class="contact-status online"></span>
-                    <img [src]='channel.imgPath != "" ?channel.imgPath  : logo ' alt="" />
+                    <img [src]=' channel.imgPath != "" ? Realtime +channel.imgPath  : logo ' alt="" />
                     <div class="meta">
                     <p class="name">{{channel.name}}</p>
                     <p class="preview">{{channel.caption}}</p>

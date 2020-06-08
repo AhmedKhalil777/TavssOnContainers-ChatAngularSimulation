@@ -7,6 +7,7 @@ import { Channel } from '../../Interfaces/channel';
 import { ChatRegionComponent } from '../chat-region/chat-region.component';
 import {Router} from '@angular/router'
 import { Location } from '@angular/common';
+import { RealtimeApi} from '../../../assets/appsetting.json'
 @Component({
   selector: 'app-channels-list',
   templateUrl: './channels-list.component.html',
@@ -18,7 +19,7 @@ export class ChannelsListComponent implements OnInit {
 
 
    }
-
+  Realtime = RealtimeApi;
   logo = 'assets/TAVSSv1.png';
   channelu : MinChannel;
   Channels :  MinChannel[];
@@ -30,7 +31,7 @@ export class ChannelsListComponent implements OnInit {
   plus = faUserPlus;
   smile= faSmile;
  fapen = faPen
-  public _url :string ="https://localhost:5001/api/v1/";
+  public _url :string = RealtimeApi +"api/v1/";
   public base64Image;
  public user : User;
   public Chatre :ChatRegionComponent;

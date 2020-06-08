@@ -10,7 +10,7 @@ import {ChatsignalrService} from '../../Services/chatsignalr.service'
 import {ChatReqionServiceService} from '../../Services/char-reqion-service.service';
 import { from } from 'rxjs';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
-import appsetting from '../../../assets/appsetting.json';
+import {RealtimeApi} from '../../../assets/appsetting.json';
 
 
 
@@ -39,8 +39,8 @@ export class ChatRegionComponent implements OnInit {
     this.messageBody = this.messageBody+ event.char;
   }
 
-public _asurl = appsetting.RealtimeApi;
-public _url :string ="https://localhost:5001/api/v1/";
+public _asurl = RealtimeApi;
+public _url :string = RealtimeApi+ "api/v1/";
   constructor(private http:HttpClient ,private hub : ChatsignalrService) {
 
    }
@@ -49,11 +49,15 @@ public _url :string ="https://localhost:5001/api/v1/";
  public message : {body:any , cid : any , uid :any };
 
   ngOnInit() {
-    this.hub.startConnection();
+
+
     this.getUser(localStorage.getItem('Id'));
     this.getChannels();
     this.getChannel();
-
+    this.hub.startConnection()
+    setTimeout(() => {
+      this.joinToGroup();
+    }, 2000);
   }
 
 
